@@ -31,6 +31,21 @@ router.get('/:id', (req,res)=>{
     })
 })
 
+router.get('/datafromtoken', (req,res)=>{
+    const token = req?.headers?.authorization?.split(" ")[1];
+    console.log(token)
+    console.log('==============================')
+    try {
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        Client.findByPk(decoded.id).then(foundUser=>{
+            res.json(foundUser)
+        })
+    } catch(err){
+        console.log(err);
+       return  res.status(403).json({msg:"invalid token!"})
+    }
+})
+
 router.post('/', (req, res)=>{
     Client.create({
         username:req.body.username,
