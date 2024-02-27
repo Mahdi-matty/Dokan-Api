@@ -123,24 +123,24 @@ const seedMe = async ()=>{
     await sequelize.sync({ force: false });
     const dbClients = await Client.bulkCreate(clientData);
     const dbMerchants = await Merchant.bulkCreate(merchantData);
-    const dbCategory = await Category.bulkCreate(categoryData);
+    const dbCategories = await Category.bulkCreate(categoryData);
     const dbProducts= await Product.bulkCreate(productData);
 
 
-    await dbMerchants[0].addProducts([0, 2, 3]); 
-    await dbMerchants[1].addProducts([1, 4, 5, 6]); 
-    await dbCategory[0].addProducts([2]);
-    await dbCategory[1].addProducts([0]);
-    await dbCategory[2].addProducts([3]);
-    await dbCategory[3].addProducts([5]);
-    await dbCategory[4].addProducts([6]);
-    await dbCategory[5].addProducts([1]);
-    await dbCategory[6].addProducts([4]);
-    
+    await dbCategories[0].addProducts([dbProducts[2]]); // Electronics - Cellphones
+    await dbCategories[1].addProducts([dbProducts[0]]); // Electronics - Computers
+    await dbCategories[2].addProducts([dbProducts[3]]); // Electronics - Accessories
+    await dbCategories[3].addProducts([dbProducts[6]]); // Clothing - Men
+    await dbCategories[4].addProducts([dbProducts[5]]); // Clothing - Women
+    await dbCategories[5].addProducts([dbProducts[1]]); // FDA - Tea
+    await dbCategories[6].addProducts([dbProducts[4]]); // FDA - Energy Drink
 
+    // Associate products with merchants
+    await dbMerchants[0].addProducts([dbProducts[0], dbProducts[2], dbProducts[3]]);
+    await dbMerchants[1].addProducts([dbProducts[1], dbProducts[4], dbProducts[5], dbProducts[6]]);
 
     console.log(`Seeding completed`);
-    process.exit(0)
-}
+    process.exit(0);
+};
 
 seedMe();

@@ -11,22 +11,6 @@ Client.hasOne(Basket, {
     foreignKey: 'clientId'
 })
 
-Basket.belongsTo(Client, {
-    foreignKey: 'clientId'
-})
-
-Basket.hasMany(Order, {
-    foreignKey: 'basketId'
-})
-
-Order.belongsTo(Basket, {
-    foreignKey: 'basketId'
-})
-
-Basket.hasMany(Product, {
-    through: Order,
-    foreignKey: 'productid'
-})
 Product.belongsToMany(Basket, {
     through: Order,
     foreignKey: 'productId'
@@ -53,12 +37,8 @@ Review.belongsTo(Product, {
     foreignKey: 'productId'
 })
 
-Category.hasMany(Product, {
-    foreignKey: 'categoryId'
-})
-Product.belongsTo(Category, {
-    foreignKey: 'categoryId'
-})
+Category.hasMany(Product)
+Product.belongsTo(Category)
 
 module.exports = {
     Order,

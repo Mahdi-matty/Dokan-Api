@@ -9,7 +9,7 @@ const Sequlize= require('../config/connection')
 router.get('/', (req,res)=>{
     Product.findAll({
         include: [Category]
-    }).then((allproduct)=>{
+    }).then(allproduct=>{
        res.json(allproduct)
     }).catch((err)=>{
        res.status(500).json({msg: 'internal server error', err})

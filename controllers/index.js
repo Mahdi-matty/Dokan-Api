@@ -13,7 +13,7 @@ const merchantRoutes= require('./merchantRoutes')
 router.use('/api/merchants', merchantRoutes)
 
 const productRoutes = require('./productRoutes')
-router.use('/api/prodcuts', productRoutes)
+router.use('/api/products', productRoutes)
 
 const orderRoutes = require('./orderRoutes')
 router.use('/api/orders', orderRoutes)
