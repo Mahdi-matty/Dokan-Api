@@ -7,7 +7,7 @@ const withTokenAuth = require('../middleware/withTokenAuth');
 const Sequlize= require('../config/connection')
 
    
-router.post('/', withTokenAuth,(req,res)=>{
+router.post('/',(req,res)=>{
        Basket.create({
            clientId: req.body.clientId
        }).then((newProduct)=>{
@@ -30,6 +30,25 @@ router.post('/', withTokenAuth,(req,res)=>{
            res.status(500).json({msg: 'internal server error', err})
        })
    })
+
+   router.get('/client/:clientId', withTokenAuth, (req, res)=>{
+    const clientId = req.params.clientId
+    Basket.findOne({
+        where: {
+            clientId: clientId
+        },
+        include: [Order]
+    }).then((findBask)=>{
+        if(!findBask){
+            res.status(404).json('no such a user')
+        }else{
+            res.json(findBask)
+        }
+    }).catch((err)=>{
+        res.status(500).json({msg: 'internal server error', err})
+    })
+})
+
 
    router.put('/:id', withTokenAuth, (req,res)=>{
     Basket.update({

@@ -11,13 +11,6 @@ Client.hasOne(Basket, {
     foreignKey: 'clientId'
 })
 
-Client.afterCreate(async (client, options) => {
-    try {
-        await Basket.create({ clientId: client.id });
-    } catch (error) {
-        console.error('Error creating basket:', error);
-    }
-});
 Basket.belongsTo(Client, {
     foreignKey: 'clientId'
 })

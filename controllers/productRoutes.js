@@ -7,7 +7,9 @@ const withTokenAuth = require('../middleware/withTokenAuth');
 const Sequlize= require('../config/connection')
 
 router.get('/', (req,res)=>{
-    Product.findAll().then((allproduct)=>{
+    Product.findAll({
+        include: [Category]
+    }).then((allproduct)=>{
        res.json(allproduct)
     }).catch((err)=>{
        res.status(500).json({msg: 'internal server error', err})
@@ -93,4 +95,37 @@ router.get('/categoryProd/:categoryId', withTokenAuth, (req, res) => {
     })
 });
 
+router.get('/categoryByName/:name', (req, res)=>{
+    const name= req.params.name
+    Category.findAll({
+        where: {
+            name: name
+        }
+    }).then(findedCat=>{
+        if(findedCat.length == 0){
+            res.status(404).json('no such a category')
+        }
+        res.json(findedCat)
+    }).catch(err=>{
+        res.status(500).json({msg: "internal server error", err})
+    })
+});
+
+router.get('/categoryByNameSub/:name/:sub', (req, res)=>{
+    const name= req.params.name;
+    const sub = req.params.sub;
+    Category.findAll({
+        where:{
+            name: name,
+            sub: sub
+        }
+    }).then(findCat=>{
+        if(findCat.length == 0){
+            res.status(500).json('no such subcategory')
+        }
+        res.json(findCat)
+    }).catch(err=>{
+        res.status(500).json({msg: 'internal server error', err})
+    })
+})
 module.exports = router

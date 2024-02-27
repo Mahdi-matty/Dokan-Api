@@ -37,7 +37,10 @@ router.post('/', (req, res)=>{
         email: req.body.email,
         password:req.body.password
     }).then((newUser)=>{
-        const token = jwt.sign({
+        Basket.create({
+            clientId: newUser.id
+        }).then((newBasket)=>{
+             const token = jwt.sign({
             email:newUser.email,
             id:newUser.id,
             username: newUser.username
@@ -46,8 +49,11 @@ router.post('/', (req, res)=>{
         })
         res.json({
             token,
-            Client:newUser
+            Client:newUser,
+            Basket: newBasket
         })
+        })
+       
     }).catch((err)=>{
         console.log(err);
         res.status(500).json({msg: 'internal server error', err})
@@ -114,7 +120,7 @@ router.post('/login', (req,res)=>{
         })
         res.json({
             token,
-            student:foundUser
+            client:foundUser
         })
     }).catch((err)=>{
         console.log(err);
