@@ -3,36 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const sequelize = require ('../config/connection')
 
-const clientData = [
-    {
-    username: `David`,
-    password: `password`,
-    email: `santiago1.dsrr@gmail.com`
-    },
-    {
-    username: `Mahdi`,
-    password: `password`,
-    email: `mmiq69@gmail.com`
-    },
-    {
-    username: `Morad`,
-    password: `password`,
-    email: `morad@gmail.com`
-    },
-    {
-    username: `maral`,
-    password: `password`,
-    email: `maral@gmail.com`
-    },
-    {
-    username: `shir`,
-    password: `password`,            
-    email: ` shir@gmail.com`
-    },
-];
-for (let clientObj of clientData) {
-    clientObj.password = bcrypt.hashSync(clientObj.password, 6)
-};
+
 const merchantData = [
     {
     username: `joe`,
@@ -121,7 +92,6 @@ const productData = [
 
 const seedMe = async ()=>{
     await sequelize.sync({ force: false });
-    const dbClients = await Client.bulkCreate(clientData);
     const dbMerchants = await Merchant.bulkCreate(merchantData);
     const dbCategories = await Category.bulkCreate(categoryData);
     const dbProducts= await Product.bulkCreate(productData);

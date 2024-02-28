@@ -22,6 +22,9 @@ router.use('/api/orders', orderRoutes)
 const basketRoutes = require('./basketRoutes')
 router.use('/api/basket', basketRoutes)
 
+const reviewRoutes = require('./reviewRoutes')
+router.use('/api/reviews', reviewRoutes)
+
 
 router.get('/datafromtoken', (req,res)=>{
     console.log('Headers:', req.headers);

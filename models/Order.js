@@ -6,9 +6,15 @@ const Basket = require('./Basket')
 class Order extends Model { }
 
 Order.init({
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
     productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: false
     },
 },{
     sequelize, 

@@ -20,7 +20,7 @@ router.get('/', (req,res)=>{
        Product.create({
            title: req.body.title,
            content: req.body.content,
-           price: req.body.status,
+           price: req.body.price,
            productPic: req.body.productPic,
            status: req.body.status
        }).then((newProduct)=>{
@@ -35,7 +35,7 @@ router.get('/', (req,res)=>{
            include: [Review, Category]
        }).then((findproduct)=>{
            if(!findproduct){
-               res.status(404).json('no such a user')
+               res.status(404).json('product not found')
            }else{
                res.json(findproduct)
            }
@@ -57,7 +57,7 @@ router.get('/', (req,res)=>{
         }
     }).then((updatedProd)=>{
         if(!updatedProd){
-            res.status(404).json('no such a Subejct')
+            res.status(404).json('product not found')
         }else{
             res.json(updatedProd)
         }
@@ -73,7 +73,7 @@ router.delete('/:id', withTokenAuth, (req, res)=>{
         }
     }).then((delsub)=>{
         if(!delsub){
-            res.status(404).json('no such a subject')
+            res.status(404).json('product not found')
         }else{
             res.json(delsub)
         }
@@ -88,7 +88,7 @@ router.get('/categoryProd/:categoryId', withTokenAuth, (req, res) => {
         if (!dbcategory) {
             res.status(404).json({ msg: "no such category!!!!" })
         } else {
-            res.json(dbcategory.Subjects)
+            res.json(dbcategory.Product)
         }
     }).catch(err => {
         res.status(500).json({ msg: "oh no!", err })

@@ -17,12 +17,12 @@ router.post('/',(req,res)=>{
        })
    })
    
-   router.get('/:id', (req, res)=>{
+router.get('/:id', (req, res)=>{
        Basket.findByPk(req.params.id, {
            include: [Product, Order]
        }).then((findBasket)=>{
            if(!findBasket){
-               res.status(404).json('no such a user')
+               res.status(404).json('card not found')
            }else{
                res.json(findBasket)
            }
@@ -31,16 +31,15 @@ router.post('/',(req,res)=>{
        })
    })
 
-   router.get('/client/:clientId', withTokenAuth, (req, res)=>{
+router.get('/client/:clientId', withTokenAuth, (req, res)=>{
     const clientId = req.params.clientId
     Basket.findOne({
         where: {
             clientId: clientId
-        },
-        include: [Order]
+        }
     }).then((findBask)=>{
         if(!findBask){
-            res.status(404).json('no such a user')
+            res.status(404).json('card not found')
         }else{
             res.json(findBask)
         }
@@ -59,7 +58,7 @@ router.post('/',(req,res)=>{
         }
     }).then((updatedBask)=>{
         if(!updatedBask){
-            res.status(404).json('no such a Subejct')
+            res.status(404).json('card not found')
         }else{
             res.json(updatedBask)
         }
@@ -75,7 +74,7 @@ router.delete('/:id', withTokenAuth, (req, res)=>{
         }
     }).then((delsub)=>{
         if(!delsub){
-            res.status(404).json('no such a subject')
+            res.status(404).json('card not found')
         }else{
             res.json(delsub)
         }

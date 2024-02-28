@@ -21,7 +21,7 @@ router.get('/:id', (req,res)=>{
         include:[Product]
     }).then(Merchant=>{
         if(!Merchant){
-            res.status(404).json({msg:'no such a user'})
+            res.status(404).json({msg:'user not found'})
         }else{
             res.json(Merchant)
         }
@@ -65,7 +65,7 @@ router.put('/:id', withTokenAuth, (req, res)=>{
         }
     }).then((editeduser)=>{
         if(!editeduser[0]){
-            res.status(404).json({msg: 'no such a user'})
+            res.status(404).json({msg: 'user not found'})
         }else{
             res.json(editeduser[0])
         }
@@ -86,7 +86,7 @@ router.delete('/:id', (req, res)=>{
         }
     }).then((deleteeduser)=>{
         if(!deleteeduser){
-            res.status(404).json({msg: 'no such a user'})
+            res.status(404).json({msg: 'user not found'})
         }else {
             res.json(deleteeduser)
         }
@@ -127,7 +127,7 @@ router.get("/logged-user", withTokenAuth, (req, res) => {
         include: [Review, Basket]
     }).then(dbStudent => {
         if (!dbStudent) {
-            res.status(404).json({ msg: "no such student!!!!" })
+            res.status(404).json({ msg: "user not found!!!!" })
         } else {
             res.json(dbStudent)
         }
