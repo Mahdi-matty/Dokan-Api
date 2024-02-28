@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const withTokenAuth = require('../middleware/withTokenAuth');
 const { Client, Merchant, Review, Basket, Product, Order } = require(`../models`);
 require('dotenv').config();
+const jwt = require('jsonwebtoken')
 
 
 const clientRoutes = require('./clientRoutes')
@@ -20,6 +21,24 @@ router.use('/api/orders', orderRoutes)
 
 const basketRoutes = require('./basketRoutes')
 router.use('/api/basket', basketRoutes)
+
+
+router.get('/datafromtoken', (req,res)=>{
+    console.log('Headers:', req.headers);
+    const token = req?.headers?.authorization?.split(" ")[1];
+    console.log(token)
+    console.log('==============================')
+    try {
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const userId = decoded.id
+        Client.findByPk(userId).then(foundUser=>{
+            res.json(foundUser)
+        })
+    } catch(err){
+        console.log(err);
+       return  res.status(403).json({msg:"invalid token!"})
+    }
+})
 
 
 module.exports = router
