@@ -8,7 +8,7 @@ const Sequlize= require('../config/connection')
 
 
 router.post('/', withTokenAuth,(req,res)=>{
-    Product.create({
+    Review.create({
         comment: req.body.comment,
         productId: req.body.productId,
         clientId: req.body.clientId,
@@ -34,7 +34,7 @@ router.get('/:id', (req, res)=>{
 })
 
 router.put('/:id', withTokenAuth, (req,res)=>{
-    Product.update({
+    Review.update({
         comment: req.body.comment,
     },{
         where: {
