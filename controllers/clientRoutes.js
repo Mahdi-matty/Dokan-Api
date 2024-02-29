@@ -143,15 +143,8 @@ router.get("/logged-user", withTokenAuth, (req, res) => {
 });
 
 router.get('/logOut', (req,res)=>{
-    req.session.destroy((err)=>{
-        if (err) {
-            return res.status(500).json({ msg: 'Failed to logout' });
-          }  
-          // Clear the session token from a cookie or local storage
-          res.clearCookie('sessionToken');  
-          // Send a response indicating successful logout
           res.json({ msg: 'Logout successful' });
         });
-    })
+  
 
 module.exports= router

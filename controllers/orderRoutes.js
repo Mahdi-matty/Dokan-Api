@@ -73,20 +73,37 @@ router.delete('/:id', (req, res)=>{
  })
 })
 
-router.get('/basket/:basketId', (req, res)=>{
-    const basketId = req.params.basketId
-    Order.findAll({
-        where: {
-            BasketId: basketId
+router.get('/basket/:basketId', async (req, res) => {
+    try {
+        const basketId = req.params.basketId;
+
+        const findOrders = await Order.findAll({
+            where: {
+                BasketId: basketId
+            }
+        });
+
+        if (findOrders.length === 0) {
+            return res.status(404).json({ message: 'Orders not found for the specified basket' });
         }
-    }).then(findOrders=>{
-        if(findOrders.length == 0){
-            res.status(404).json('order not found')
-        }
-        res.json(findOrders)
-    }).catch(err=>{
-        res.status(500).json({msg : 'internal server error', err})
-    })
-})
+        const orderProductPairs = await Promise.all(findOrders.map(async order => {
+            const productId = order.productId;
+            const product = await Product.findOne({
+                where: {
+                    id: productId
+                }
+            });
+            return {
+                order: order,
+                product: product
+            };
+        }));
+
+        res.json(orderProductPairs);
+    } catch (error) {
+        console.error('Internal server error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 module.exports = router
