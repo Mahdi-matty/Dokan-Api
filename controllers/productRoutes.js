@@ -128,4 +128,21 @@ router.get('/categoryByNameSub/:name/:sub', (req, res)=>{
         res.status(500).json({msg: 'internal server error', err})
     })
 })
+
+
+router.get('/merchant/:merchantId', withTokenAuth, (req, res)=>{
+    const merchantId = req.params.merchantId
+    Product.findAll({
+        where:{
+            merchantId: merchantId
+        }
+    }).then(findProduct=>{
+        if(findProduct.length == 0){
+            res.status(404).json('product not found')
+        }
+         res.json(findProduct)
+    }).catch(err=>{
+        res.status(500).json({msg: 'internal server error', err})
+    })
+})
 module.exports = router

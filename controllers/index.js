@@ -33,10 +33,34 @@ router.get('/datafromtoken', (req,res)=>{
     console.log('==============================')
     try {
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
-        const userId = decoded.id
-        Client.findByPk(userId).then(foundUser=>{
-            res.json(foundUser)
+        console.log(decoded)
+        const userName = decoded.username
+        Client.findOne({
+            where: {
+                username: userName
+            }
+        }).then(foundClient=>{
+            if(!foundClient){
+                Merchant.findOne({
+                    where: {
+                        username: userName
+                    }
+                }).then(foundMerchant=>{
+                    res.json({
+                        user: foundMerchant,
+                        status: 'merchant'
+                    })
+                })
+            }
+            res.json({
+                user: foundClient,
+                status: 'client'
+            })
         })
+        // const userId = decoded.id
+        // Client.findByPk(userId).then(foundUser=>{
+        //      res.json(foundUser)
+        // })
     } catch(err){
         console.log(err);
        return  res.status(403).json({msg:"invalid token!"})
