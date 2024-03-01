@@ -22,7 +22,7 @@ router.get('/', (req,res)=>{
            content: req.body.content,
            price: req.body.price,
            productPic: req.body.productPic,
-           status: req.body.status
+           stock: req.body.stock
        }).then((newProduct)=>{
            res.json(newProduct)
        }).catch((err)=>{
@@ -50,7 +50,7 @@ router.get('/', (req,res)=>{
         content: req.body.content,
         price: req.body.status,
         productPic: req.body.productPic,
-        status: req.body.status
+        stock: req.body.stock
     },{
         where: {
             id: req.params.id

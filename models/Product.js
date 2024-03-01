@@ -1,7 +1,15 @@
 const { Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Product extends Model { }
+class Product extends Model {
+  get status(){
+    if (this.stock> 0){
+      return 'available'
+    }else{
+      return 'unavailable'
+    }
+  }
+ }
 
 Product.init({
     title: {
@@ -15,10 +23,9 @@ Product.init({
     price: {
       type: DataTypes.FLOAT
     },
-    status: {
-        type: DataTypes.ENUM('available', 'unavailable'),
-        defaultValue: 'available'
-      },
+    stock: {
+      type: DataTypes.INTEGER
+    },
       productPic: {
         type: DataTypes.STRING
       }

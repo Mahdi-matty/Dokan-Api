@@ -56,37 +56,44 @@ const productData = [
     {
         title: 'Macbook',
         content: 'apple notebook',
-        price: 1999
+        price: 1999,
+        stock: 25
     },
     {
         title: 'AhmadTea',
         content: 'ahmad black tea',
-        price: 6.99
+        price: 6.99,
+        stock: 30
     },
     {
         title: 'Samsung s23',
         content: 'samsung newest galaxy model',
-        price: 1899
+        price: 1899,
+        stock: 50
     },
     {
         title: 'Airpod',
         content: 'latest apple ear bud',
-        price: 399
+        price: 399,
+        stock: 2
     }, 
     {
         title: 'Monster energy',
         content: 'monster energy drink',
-        price: 3.99
+        price: 3.99,
+        stock: 5
     },
     {
         title: 'armani suit',
         content: 'black armani suit',
-        price: 499
+        price: 499,
+        stock: 9
     },
     {
         title: 'mk boots',
         content: 'mk women boots',
-        price: 1099
+        price: 1099,
+        stock: 15
     }
 ]
 
