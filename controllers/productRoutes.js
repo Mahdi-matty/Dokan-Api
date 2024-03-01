@@ -7,16 +7,14 @@ const withTokenAuth = require('../middleware/withTokenAuth');
 const Sequlize= require('../config/connection')
 
 router.get('/', (req,res)=>{
-    Product.findAll({
-        include: [Category]
-    }).then(allproduct=>{
+    Product.findAll().then(allproduct=>{
        res.json(allproduct)
     }).catch((err)=>{
        res.status(500).json({msg: 'internal server error', err})
     })
    })
    
-   router.post('/', withTokenAuth,(req,res)=>{
+router.post('/', withTokenAuth,(req,res)=>{
        Product.create({
            title: req.body.title,
            content: req.body.content,
@@ -28,9 +26,9 @@ router.get('/', (req,res)=>{
        }).catch((err)=>{
            res.status(500).json({msg: 'internal server error', err})
        })
-   })
+   });
    
-   router.get('/:id', (req, res)=>{
+router.get('/:id', (req, res)=>{
        Product.findByPk(req.params.id, {
            include: [Review, Category]
        }).then((findproduct)=>{
@@ -42,7 +40,7 @@ router.get('/', (req,res)=>{
        }).catch((err)=>{
            res.status(500).json({msg: 'internal server error', err})
        })
-   })
+   });
 
    router.put('/:id', withTokenAuth, (req,res)=>{
     Product.update({
@@ -81,19 +79,6 @@ router.delete('/:id', withTokenAuth, (req, res)=>{
         res.status(500).json({msg: 'internal server error', err})
     })
 })
-router.get('/categoryProd/:categoryId', withTokenAuth, (req, res) => {
-    Category.findByPk(req.params.categoryId, {
-        include: [Product]
-    }).then(dbcategory => {
-        if (!dbcategory) {
-            res.status(404).json({ msg: "no such category!!!!" })
-        } else {
-            res.json(dbcategory.Product)
-        }
-    }).catch(err => {
-        res.status(500).json({ msg: "oh no!", err })
-    })
-});
 
 router.get('/categoryByName/:name', (req, res)=>{
     const name= req.params.name
