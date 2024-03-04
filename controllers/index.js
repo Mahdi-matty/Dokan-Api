@@ -29,6 +29,10 @@ const categoryRoutes = require('./categoryRoutes')
 router.use('/api/categories', categoryRoutes)
 
 
+const searchRoutes= require('./searchRoutes')
+router.use('/search', searchRoutes)
+
+
 router.get('/datafromtoken', (req,res)=>{
     console.log('Headers:', req.headers);
     const token = req?.headers?.authorization?.split(" ")[1];

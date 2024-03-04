@@ -5,6 +5,8 @@ const {Product, Merchant, Review, Order, Basket, Category} = require('../models'
 const jwt = require("jsonwebtoken");
 const withTokenAuth = require('../middleware/withTokenAuth');
 const Sequlize= require('../config/connection')
+const { Op } = require('sequelize');
+
 
 router.get('/', (req,res)=>{
     Product.findAll().then(allproduct=>{
