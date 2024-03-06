@@ -32,6 +32,9 @@ router.use('/api/categories', categoryRoutes)
 const searchRoutes= require('./searchRoutes')
 router.use('/search', searchRoutes)
 
+const notificationRoutes = require('./notificationRoutes')
+router.use('/api/notification', notificationRoutes)
+
 
 router.get('/datafromtoken', (req,res)=>{
     console.log('Headers:', req.headers);
