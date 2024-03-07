@@ -94,7 +94,25 @@ const productData = [
         content: 'mk women boots',
         price: 1099,
         stock: 15
-    }
+    },
+    {
+        title: 'earl grey tea',
+        content: 'black silan tea',
+        price: 10,
+        stock: 15
+    },
+    {
+        title: 'playstation 5',
+        content: 'gaming console',
+        price: 1099,
+        stock: 15
+    },
+    {
+        title: 'beats headphone',
+        content: 'premium headphone',
+        price: 499,
+        stock: 15
+    },
 ]
 
 const seedMe = async ()=>{
@@ -106,14 +124,17 @@ const seedMe = async ()=>{
 
     await dbCategories[0].addProducts([dbProducts[2]]); // Electronics - Cellphones
     await dbCategories[1].addProducts([dbProducts[0]]); // Electronics - Computers
+    await dbCategories[1].addProducts([dbProducts[8]]); // Electronics - Computers
     await dbCategories[2].addProducts([dbProducts[3]]); // Electronics - Accessories
+    await dbCategories[2].addProducts([dbProducts[9]]); // Electronics - Accessories
     await dbCategories[3].addProducts([dbProducts[6]]); // Clothing - Men
     await dbCategories[4].addProducts([dbProducts[5]]); // Clothing - Women
     await dbCategories[5].addProducts([dbProducts[1]]); // FDA - Tea
+    await dbCategories[5].addProducts([dbProducts[7]]); // FDA - Tea
     await dbCategories[6].addProducts([dbProducts[4]]); // FDA - Energy Drink
 
     // Associate products with merchants
-    await dbMerchants[0].addProducts([dbProducts[0], dbProducts[2], dbProducts[3]]);
+    await dbMerchants[0].addProducts([dbProducts[0], dbProducts[2], dbProducts[3], dbProducts[7]], dbProducts[8], dbProducts[9]);
     await dbMerchants[1].addProducts([dbProducts[1], dbProducts[4], dbProducts[5], dbProducts[6]]);
 
     console.log(`Seeding completed`);

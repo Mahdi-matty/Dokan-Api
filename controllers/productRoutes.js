@@ -117,17 +117,17 @@ router.get('/categoryByNameSub/:name/:sub', (req, res)=>{
 })
 
 
-router.get('/merchant/:merchantId', withTokenAuth, (req, res)=>{
+router.get('/merchant/:merchantId', (req, res)=>{
     const merchantId = req.params.merchantId
     Product.findAll({
         where:{
             merchantId: merchantId
         }
-    }).then(findProduct=>{
-        if(findProduct.length == 0){
+    }).then((findProducts)=>{
+        if(findProducts.length == 0){
             res.status(404).json('product not found')
         }
-         res.json(findProduct)
+         res.json(findProducts)
     }).catch(err=>{
         res.status(500).json({msg: 'internal server error', err})
     })

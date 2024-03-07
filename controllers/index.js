@@ -36,7 +36,7 @@ const notificationRoutes = require('./notificationRoutes')
 router.use('/api/notification', notificationRoutes)
 
 
-router.get('/datafromtoken', (req,res)=>{
+router.get('/tokenDataClient', (req,res)=>{
     console.log('Headers:', req.headers);
     const token = req?.headers?.authorization?.split(" ")[1];
     console.log(token)
@@ -49,28 +49,40 @@ router.get('/datafromtoken', (req,res)=>{
             where: {
                 username: userName
             }
-        }).then(foundClient=>{
-            if(!foundClient){
-                Merchant.findOne({
-                    where: {
-                        username: userName
-                    }
-                }).then(foundMerchant=>{
-                    res.json({
-                        user: foundMerchant,
-                        status: 'merchant'
-                    })
-                })
+        }).then(foundClient => {
+            if (foundClient) {
+                // If a client is found, send the client as response
+                return res.json(foundClient);
+            } else {
+                // If neither client nor merchant is found, handle the error
+                throw new Error('User not found');
+            }})
+    } catch(err){
+        console.log(err);
+       return  res.status(403).json({msg:"invalid token!"})
+    }
+});
+router.get('/tokenDataMerchant', (req,res)=>{
+    console.log('Headers:', req.headers);
+    const token = req?.headers?.authorization?.split(" ")[1];
+    console.log(token)
+    console.log('==============================')
+    try {
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        console.log(decoded)
+        const userName = decoded.username
+        Merchant.findOne({
+            where: {
+                username: userName
             }
-            res.json({
-                user: foundClient,
-                status: 'client'
-            })
-        })
-        // const userId = decoded.id
-        // Client.findByPk(userId).then(foundUser=>{
-        //      res.json(foundUser)
-        // })
+        }).then(foundMerchant => {
+            if (foundMerchant) {
+                // If a client is found, send the client as response
+                return res.json(foundMerchant);
+            } else {
+                // If neither client nor merchant is found, handle the error
+                throw new Error('User not found');
+            }})
     } catch(err){
         console.log(err);
        return  res.status(403).json({msg:"invalid token!"})
