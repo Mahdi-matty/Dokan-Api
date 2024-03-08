@@ -134,7 +134,12 @@ const seedMe = async ()=>{
     await dbCategories[6].addProducts([dbProducts[4]]); // FDA - Energy Drink
 
     // Associate products with merchants
-    await dbMerchants[0].addProducts([dbProducts[0], dbProducts[2], dbProducts[3], dbProducts[7]], dbProducts[8], dbProducts[9]);
+    await dbMerchants[0].addProducts([dbProducts[0]]);
+    await dbMerchants[0].addProducts([dbProducts[2]]);
+    await dbMerchants[0].addProducts([dbProducts[3]])
+    await dbMerchants[0].addProducts([dbProducts[7]])
+    await dbMerchants[0].addProducts([dbProducts[8]])
+    await dbMerchants[0].addProducts([dbProducts[9]])
     await dbMerchants[1].addProducts([dbProducts[1], dbProducts[4], dbProducts[5], dbProducts[6]]);
 
     console.log(`Seeding completed`);

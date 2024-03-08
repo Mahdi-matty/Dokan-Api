@@ -35,6 +35,9 @@ router.use('/search', searchRoutes)
 const notificationRoutes = require('./notificationRoutes')
 router.use('/api/notification', notificationRoutes)
 
+const uploadRoute = require('./upload')
+router.use('/api/upload', uploadRoute)
+
 
 router.get('/tokenDataClient', (req,res)=>{
     console.log('Headers:', req.headers);
