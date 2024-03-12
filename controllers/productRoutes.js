@@ -82,40 +82,33 @@ router.delete('/:id', withTokenAuth, (req, res)=>{
     })
 })
 
-router.get('/categoryByName/:name', (req, res)=>{
-    const name= req.params.name
-    Category.findAll({
+router.get('/cat/:name', async (req, res)=>{
+   const  categoryName = req.params.name
+   try {
+    const findCat = await Category.findAll({
         where: {
-            name: name
+            name: categoryName
         }
-    }).then(findedCat=>{
-        if(findedCat.length == 0){
-            res.status(404).json('no such a category')
-        }
-        res.json(findedCat)
-    }).catch(err=>{
-        res.status(500).json({msg: "internal server error", err})
-    })
+    });
+    
+    if (findCat.length === 0) {
+        return res.status(404).json('Category not found');
+    }
+    const products = [];
+    for (const cat of findCat) {
+        const findProd = await Product.findAll({
+            where: {
+                categoryId: cat.id 
+            }
+        });
+        products.push(findProd);
+    }
+    
+    res.json(products);
+} catch (err) {
+    res.status(500).json({ error: err.message });
+}
 });
-
-router.get('/categoryByNameSub/:name/:sub', (req, res)=>{
-    const name= req.params.name;
-    const sub = req.params.sub;
-    Category.findAll({
-        where:{
-            name: name,
-            sub: sub
-        }
-    }).then(findCat=>{
-        if(findCat.length == 0){
-            res.status(500).json('no such subcategory')
-        }
-        res.json(findCat)
-    }).catch(err=>{
-        res.status(500).json({msg: 'internal server error', err})
-    })
-})
-
 
 router.get('/merchant/:merchantId', (req, res)=>{
     const merchantId = req.params.merchantId
