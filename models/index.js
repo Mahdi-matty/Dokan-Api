@@ -6,10 +6,14 @@ const Review = require('./Review')
 const Client = require('./Client')
 const Order = require('./Order')
 const Notification = require('./Notification')
+const Fav = require('./Fav')
 
 Client.hasOne(Basket, {
     foreignKey: 'clientId'
 })
+
+Client.hasOne(Fav)
+Fav.hasMany(Product)
 
 Client.hasMany(Notification)
 Notification.belongsTo(Client)
@@ -53,5 +57,6 @@ module.exports = {
     Client,
     Product,
     Basket,
-    Notification
+    Notification,
+    Fav
 }       

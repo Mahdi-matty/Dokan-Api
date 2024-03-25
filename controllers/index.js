@@ -19,6 +19,9 @@ router.use('/api/products', productRoutes)
 const orderRoutes = require('./orderRoutes')
 router.use('/api/orders', orderRoutes)
 
+const favRoutes = require('./favRoutes')
+router.use('/api/fav', favRoutes)
+
 const basketRoutes = require('./basketRoutes')
 router.use('/api/basket', basketRoutes)
 
